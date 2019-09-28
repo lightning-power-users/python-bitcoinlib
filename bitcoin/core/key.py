@@ -30,7 +30,11 @@ if sys.version > '3':
 
 import bitcoin.core.script
 
-_ssl = ctypes.cdll.LoadLibrary(ctypes.util.find_library('ssl') or 'libeay32')
+_ssl = ctypes.cdll.LoadLibrary(
+    ctypes.util.find_library('ssl')
+    or ctypes.util.find_library('libcrypto-1_1')
+    or 'libeay32'
+)
 
 class OpenSSLException(EnvironmentError):
     pass
