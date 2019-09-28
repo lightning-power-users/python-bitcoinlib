@@ -123,7 +123,8 @@ class BaseProxy(object):
                  service_url=None,
                  service_port=None,
                  btc_conf_file=None,
-                 timeout=DEFAULT_HTTP_TIMEOUT):
+                 timeout=DEFAULT_HTTP_TIMEOUT,
+                 wallet=''):
 
         # Create a dummy connection early on so if __init__() fails prior to
         # __conn being created __del__() can detect the condition and handle it
@@ -167,6 +168,9 @@ class BaseProxy(object):
 
             service_url = ('%s://%s:%d' %
                 ('http', conf['rpchost'], conf['rpcport']))
+
+            if wallet:
+                service_url += '/wallet/' + wallet
 
             cookie_dir = conf.get('datadir', os.path.dirname(btc_conf_file))
             if bitcoin.params.NAME != "mainnet":
